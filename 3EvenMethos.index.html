@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Objetos con metodos</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<button v-on:click="upvote">
+			¡Votar! {{upvotes}}
+		</button>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '.container',
+		data: {
+			upvotes: 0
+		},
+		// Define los métodos en el objeto **`methods`**
+		methods: {
+			upvote: function(){
+			// Dentro de los métodos, **`this`** hace referencia a la instancia de Vue
+				this.upvotes++;
+			}
+		}
+	})
+</script>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Propiedades computadas Pag.45</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<h1>Ingres 1 número y sumara en b.</h1>
+		a={{ a }}, b={{ b }}
+		<input v-model.number="a" class="form-control">		
+		<hr>
+		//Ejercicio de sumas
+		<form class="form-inline">
+			<input v-model.number="x" class="form-control"> +		
+			<input v-model.number="y" class="form-control">		
+		</form>
+		<h2> Resultado: {{ x }}+{{ y }} = {{ z }} </h2>
+		<hr>
+		//Calculadora en tiempo real
+		<form class="form-inline">
+			<input v-model.number="m" class="form-control">
+			<select v-model="operator" class="form-control">
+				<option>+</option>
+				<option>-</option>
+				<option>*</option>
+				<option>/</option>
+			</select> 
+			<input v-model.number="n" class="form-control">	
+		</form>
+		<h2 class="alert-info">Resultado: {{ m }}  {{ operator }} {{ n }} = {{ h }} </h2>
+		<pre> {{ $data }} </pre>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '.container',
+		data: {
+			a: 1,
+			x: 1,
+			y: 2,
+			m: 1,
+			n: 2,
+			operator: "+",
+		},
+		computed: {
+			b: function(){
+				return this.a+1
+			},
+			z: function() {
+				return this.x+this.y 
+			},
+			h: function(){
+				switch (this.operator) {
+					case "+":
+						return this.m + this.n
+						break;
+					case "-":
+						return this.m - this.n
+						break;
+					case "*":
+						return this.m * this.n
+						break;
+					case "/":
+						return this.m / this.n
+						break;
+				}
+			}
+		}
+	})
+</script>
+</html>

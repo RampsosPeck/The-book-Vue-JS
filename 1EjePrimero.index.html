@@ -1,0 +1,127 @@
+<html>
+<head>
+	<title>Hola Vue</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div  class="container">
+		<h1> {{ message }} </h1>
+		<input v-model="message">
+		<hr>
+		<footer class="footer">
+			<h2> <b>Hola</b> {{ name }} </h2> <br>
+			<h3>Ingresa tu nombre:<input v-model="name"></h3>	
+		</footer>
+		<hr>
+		<h1 v-if="!mensaje">¡Debes enviar un mensaje de ayuda!</h1>
+		<h2 v-else>¡Has enviado un mensaje!</h2>
+		<textarea v-model="mensaje"></textarea>
+		<button v-show="mensaje">
+			!Enviar mensaje de ayuda a los aliados¡
+		</button>
+		<hr>
+		//Ejercicio de genero
+		<div v-if="genero === 'masculino' || genero === 'femenino'">
+			<h1>
+				Hello, 
+				<span v-show="genero === 'masculino'">Mister {{ nombre }} </span>
+				<span v-if="genero === 'femenino'">Miss {{ nombre }} </span>
+			</h1>
+			
+		</div>
+
+		<h1 v-else>Oh Asi que no puedes decidir!. bien!</h1>
+
+		<label for="genero">Ingrese su genero:</label>
+		<input v-model="genero" class="form-control" id="genero">
+		<label for="nombre">Ingrese su nombre:</label>
+		<input v-model="nombre" class="form-control" id="nombre">
+		<hr>
+		
+		//Ejercicio de v-for
+		<h1>Tabla de multiplicar 4.</h1>
+		<ul class="list-group">
+			<li v-for="i in 11" class="list-group-item-info">
+				{{ i-1 }} por 4 es igual a {{ (i-1) * 4 }}
+			</li>
+		</ul>
+		<hr>
+		//Ejercicio de renderizar una lista 
+		<h1>¡Escucharemos algunas historias!</h1>
+		<div>
+			<ul class="list-group">
+				<li v-for="historia in historias" class="list-group-item-success">
+					alguien dijo " {{historia}} "
+					
+				</li>
+			</ul>
+		</div>
+		<hr>
+		//Ejercicios de Objetos
+		<h1>¡Escucharemos algunas historias de OBJETOS!</h1>
+		<div>
+			<ul class="list-group">
+				<li v-for="(story, index) in stories" class="list-group-item-warning">
+					{{index}}. {{story.writer}} dijo " {{story.plot}} "
+				</li>
+			</ul>
+		</div>
+		//Ejercicio de objetos con indice y key
+		<h1>¡Este soy yo!</h1>
+		<ul class="list-group">
+			<li v-for="(detalle, key, index) in detalles" class="list-group-item-danger">
+				{{index}}: {{key}} = {{detalle}}
+			</li>
+		</ul>
+		//Ejercicio de boton de votar
+		<button v-on:click="upvotes++">
+			¡Votar! {{upvotes}}
+		</button>
+		<pre>
+			{{ $data }}
+		</pre>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script> 
+	new Vue({
+		el: '.container',
+		data: {
+			message : '!Saludos su Majestad¡',
+			name:'',
+			mensaje:' !Nuestro resy es el rey¡ !Enviar ayuda¡',
+			genero: 'femenino',
+			nombre:'Universe',
+			historias: [
+				"¡Estrellé mi auto hoy!",
+				"¡Ayer, alguien robó mi bolso!",
+				"¡Alguien se comió mi chocolate...!",
+			],
+			stories: [
+				{	
+					plot: "¡Estrellé mi auto hoy!",
+					writer: "Alex"
+				},
+				{	
+					plot: "¡Ayer, alguien se robó mi bolso!",
+					writer: "john"
+				},
+				{	
+					plot: "¡Alguien se comió mi chocolate...!",
+					writer: "Miguel"
+				}
+			],
+			detalles:  
+			{
+				nombre: "Jorge Peralta",				 
+				altura: "1.75 cm.",				 
+				peso: "65 kg.",				 
+				colorDeOjos: "Cafes claros",				 
+				comidaFavorita: "Hamburguesas"
+			},
+			upvotes: 0
+			
+		}
+	})
+</script>
+</html>

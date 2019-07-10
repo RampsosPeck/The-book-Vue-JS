@@ -1,0 +1,64 @@
+<html>
+<head>
+	<title>Modificadores de eventos Pag.39</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<h1>Ingres 2 números y escoge una operación.</h1>
+		<form class="form-inline">
+			<!-- Nota aquí que el modificador especial 'number'
+			es pasado para convertir el texto ingresado a números.-->
+			<input v-model.number="a" class="form-control">
+			<select v-model="operator" class="form-control">
+				<option>+</option>
+				<option>-</option>
+				<option>*</option>
+				<option>/</option>
+			</select>
+			<!-- Nota aquí que el modificador especial 'number'
+			es pasado para convertir el texto ingresado a números.-->
+			<input v-model.number="b" class="form-control">
+			<button type="submit" @click.prevent="calcular" class="btn btn-info">
+				Calcular
+			</button>		
+		</form>
+		<h2 class="alert-info">Resultado: {{ a }}  {{ operator }} {{ b }} = {{ c }} </h2>
+		<pre>
+			{{ $data }}
+		</pre>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '.container',
+		data: {
+			a: 1,
+			b: 2,
+			c: null,
+			operator: "+"
+		},
+		methods: {
+			calcular : function(){ 
+				switch (this.operator){
+					case "+":
+						this.c = this.a + this.b
+						break;
+					case "-":
+						this.c = this.a - this.b
+						break;
+					case "*":
+						this.c = this.a * this.b
+						break;
+					case "/":
+						this.c = this.a / this.b
+						break;
+				}
+			}		
+		}
+	})
+</script>
+</html>
+
+

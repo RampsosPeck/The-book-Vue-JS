@@ -1,0 +1,58 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <title>Ejercicio de propiedades computadas</title>
+</head>
+<body>
+<div class="container">
+    <h1>Personas para votar</h1>
+    <ul class="list-group">
+        <li v-for="(candidate, index) in candidates" :key="index" class="list-group-item">
+            {{candidate.name}} {{candidate.votes}}
+            <!-- increase votes 'on:click'-->
+            <button class="btn btn-default" @click="candidate.votes++">Votar</button>
+        </li>
+    </ul>
+    <!-- listening for keyboard event -->
+    <input @keyup.delete="clear" class="form-control" placeholder="press 'delete' to reset">
+    <!-- display the name of the 'mayor' using a computed property-->
+    <h2>El mayor es {{mayor.name}}!</h2>
+    <pre>{{ $data }}</pre>
+    <pre>{{ mayor }}</pre>
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '.container',
+        data: {
+            candidates: [
+                {name: "Mr. Black", votes: 140},
+                {name: "Mr. White", votes: 135},
+                {name: "Mr. Pink", votes: 145},
+                {name: "Mr. Brown", votes: 130},
+            ]
+        },
+        computed: {
+            mayor: function () {
+                //Primero ordenamos la matriz descendente
+                var candidatesSorted = this.candidates.sort(function (a, b) {
+                    return b.votes - a.votes;
+                });
+                //El alcalde será el primer elemento.
+                return candidatesSorted[0];
+            }
+        },
+        methods: {
+            //este método se ejecuta cuando se presiona la tecla 'eliminar'
+            clear: function () {
+                //Cambia los votos de todos los candidatos a 0 usando la función map ().
+                this.candidates = this.candidates.map(function (candidate) {
+                    candidate.votes = 0;
+                    return candidate;
+                })
+            }
+        }
+    })
+</script>
+</html>
