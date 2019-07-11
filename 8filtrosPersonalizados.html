@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title> Filtros personalizados </title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		 <h1> ¡Identidades reales de superhéroes! </h1>
+		 <ul class="list-group-item-light">
+		 	<li v-for="hero in heroes" class="list-group-item-info">
+		 		{{ hero | snitch }}
+		 	</li>
+		 </ul>
+		 <hr>
+		 //Ejercicio de orden y filtro
+		 <h2>Gente de Gaul</h2>
+		 <ul class="list-group-item-warning">
+		 	<li v-for="persona in personasOrderDes" class="list-group-item-danger">
+		 		Nombre: {{ persona.nombre }}, Edad: {{ persona.edad }}
+		 	</li>
+		 </ul>
+		 <h2>Gente "mayor" a 50 años</h2>
+		 <ul class="list-group-item-warning">
+		 	<li v-for="(persona, index) in personasOrdeMayor" :key="index" class="list-group-item-danger">
+		 		{{ persona.nombre }} {{ persona.edad }}
+		 	</li>
+		 </ul>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	Vue.filter('snitch', function(hero){
+		return '¡'+hero.secretId + ' es ' + hero.firstname + ' ' +hero.lastname + ' en la vida real!'
+	}) 
+	new Vue({
+		el: '.container',
+		data: {
+			 heroes: [
+			 	{ firstname: 'Bruce', lastname: 'Wayne', secretId: 'Batman'},
+			 	{ firstname: 'Clarck', lastname: 'Kent', secretId: 'Superman'},
+			 	{ firstname: 'Jay', lastname: 'Garrick', secretId: 'Flash'},
+			 	{ firstname: 'Peter', lastname: 'Parker', secretId: 'Spider-Man'}
+			 ],
+			 personas: [
+			 	{ nombre: 'Jorge peralta', edad: 22},
+			 	{ nombre: 'Nicoalas taglapico', edad: 40},
+			 	{ nombre: 'Otamendi Prado', edad: 51},
+			 	{ nombre: 'Esteban Urquizu', edad: 13},
+			 	{ nombre: 'Manuel Johan', edad: 66}
+			 ]
+		},
+		computed: {
+			 personasOrderDes: function(){
+			 	return this.personas.sort(function(a,b){
+			 		return a.edad - b.edad;
+			 	})
+			 },
+			 personasOrdeMayor: function(){
+			 	return this.personas.filter(function(item){
+			 		return item.edad > 50;
+			 	})
+			 }
+		}
+	})
+</script>
+</html>

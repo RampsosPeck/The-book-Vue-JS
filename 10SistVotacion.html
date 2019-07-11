@@ -1,0 +1,87 @@
+<html>
+<head>
+	<title> Sist Votación </title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			 <h1>¡Escuchemos algunas historias!</h1>
+			 <ul class="list-group-item-light">
+			 	<story v-for="story in stories" :story="story" :favorito="favorito"></story>
+			 </ul>
+			 <pre>{{ $data }}</pre>
+		</div> 
+	</div>
+	<template id="story-template">
+		<li class="list-group-item-info">
+			{{ story.writer }} dijo: "{{ story.plot }}".
+			{{ story.votos }} votos.
+			<button v-show="!story.votado" @click="vote" class="btn btn-primary">
+				Votar
+			</button>
+			<button v-show="!esFavorito" @click="setFavorito" class="btn btn-success">
+				Favorito
+			</button>
+			<span v-show="esFavorito" class="glyphicon glyphicon-star pull-right" aria-hidden="true">
+			</span>
+		</li>
+	</template>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+ 	
+ 	Vue.component('story', {
+ 		template: "#story-template",
+ 		props: ['story','favorito'],
+ 		methods:{
+ 			vote: function(){
+ 				this.story.votos += 1;
+ 				this.story.votado = true;
+ 			},
+ 			setFavorito: function (){
+ 				this.favorito = this.story;
+ 			}
+ 		},
+ 		computed:{
+ 			esFavorito: function(){
+ 				return this.story == this.favorito;
+ 			}
+ 		}
+ 	});
+
+	new Vue({
+		el: '#app',
+		data: {
+		 	stories: [
+			{
+				plot: 'Mi caballo es genial.',
+				writer: 'Mr. Weebl',
+				votos: 28,
+				votado: false
+			},
+			{
+				plot: 'Los narvales inventaron el Shish Kebab.',
+				writer: 'Mr. Weebl',
+				votos: 8,
+				votado: false
+			},
+			{
+				plot: 'El lado oscuro de la Fuerza es más fuerte.',
+				writer: 'Darth Vader',
+				votos: 49,
+				votado: false
+			},
+			{
+				plot: 'Uno simplemente no camina hacia Mordor.',
+				writer: 'Boromir',
+				votos: 74,
+				votado: false
+			}],
+			favorito: {}
+		}, 
+		methods: { 
+		}
+	})
+</script>
+</html>

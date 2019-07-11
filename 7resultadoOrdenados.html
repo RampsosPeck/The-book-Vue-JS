@@ -1,0 +1,75 @@
+<html>
+<head>
+	<title>Resultados Ordenados Pag. 62</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+	<!--Para ordenar el arreglo vamos a usar la función de JavaScript  sort 43, la cual esta lista para ordenar los elementos de un arreglo y devuelve el arreglo. -->
+	<h1>¡Escuchamos algunas historias!</h1>
+	<ul class="list-group-item-info">
+		<li v-for="historia in histoOrdenar" class="list-group-item-success">
+			{{ historia.writer }} dijo "{{ historia.plot }}"
+			{{ historia.votos }} votos.
+		</li>
+	</ul>
+	<button @click="ordenar = ordenar * -1">Invertir orden</button>
+	<pre> {{ $data }} </pre>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '.container',
+		data: {
+			historias: [
+				{	
+					plot: "¡Estrellé mi auto hoy!",
+					writer: "Alex",
+					votos: 60
+				},
+				{	
+					plot: "¡Ayer, alguien se robó mi bolso!",
+					writer: "Jhon",
+					votos: 25
+				},
+				{	
+					plot: "¡Alguien se comió mi chocolate...!",
+					writer: "Alex",
+					votos: 35
+				},
+				{	
+					plot: "¡Ayer, me comi una torta!",
+					writer: "Alex",
+					votos: 58
+				},
+				{	
+					plot: "¡Alguien se comió mi chocolate...!",
+					writer: "Jhon",
+					votos: 40
+				},
+				{	
+					plot: "¡Ayer, alguien se robó mi bolso!",
+					writer: "Alex",
+					votos: 58
+				},
+			],
+			ordenar: -1
+		},
+		methods: {
+			 
+		},
+		computed: {
+			histoOrdenar: function(){
+				var ordenar = this.ordenar;
+				return this.historias.sort(function (a,b){
+					return (a.votos - b.votos) * ordenar;
+				})
+			}
+		}
+	})
+</script>
+</html>
+
+
+
