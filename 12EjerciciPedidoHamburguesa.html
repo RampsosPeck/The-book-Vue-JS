@@ -1,0 +1,154 @@
+<!-- BIEN EJEMPLO 1
+<html>
+<head>
+	<title>Eventos Personalizados</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container text-center">
+			<p style="font-size: 140px;">
+				{{ votos }}
+			</p>
+			<button class="btn btn-info" @click="votar" > <strong> Votar </strong></button>
+		</div>
+	</div> 
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+  
+	new Vue({
+		el: '#app',
+		data: {
+		 	votos: 0
+		},
+		methods: {
+			votar:function(writer){
+				this.$emit('votado')
+			},
+		},
+		created (){
+			this.$on('votado', function(button){
+				this.votos++
+			})
+		}
+	})
+</script>
+</html>   -->
+
+<!-- Ejemplo comunicacion Padre e hijo 
+<html>
+<head>
+	<title>comunicacion pardre e hijo</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container text-center">
+			<p style="font-size: 140px;">
+				{{ votos }}
+			</p>
+			<cocina @votado="contarVotos" name="Cheeseburger"> </cocina>
+		</div>
+	</div> 
+	<template id="cocinar">
+		<button class="btn btn-info" @click="votar"> Cheeseburger </button>
+	</template>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+  	Vue.component('cocina', {
+		template: '#cocinar',
+		props: ['nombre'],
+		methods: {
+			votar: function () {
+				this.$emit('votado')
+			}
+		},
+	});
+	new Vue({
+		el: '#app',
+		data: {
+		 	votos: 0
+		},
+		methods: {
+			contarVotos:function(){
+				this.votos++
+			}
+		}
+	})
+</script>
+</html> -->
+
+<html>
+<head>
+	<title>Batalla de comida</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container text-center">
+			<p style="font-size: 140px;">
+				{{ votos }}
+			</p>
+			<div class="row">
+				<cocina @votar="contarVoto" name="Hamburguesa con queso"></cocina> 
+				<cocina @votar="contarVoto" name="Rodeo Burguer"></cocina>
+				<cocina @votar="contarVoto" name="Super Burguer"></cocina>
+				<cocina @votar="contarVoto" name="Burguer pepa"></cocina>
+			</div>
+			<h1>Registro:</h1>
+			<ul class="list-group">
+				<li class="list-group-item" v-for="votar in log"> {{ votar }} </li>
+			</ul>
+		</div>
+	</div> 
+</body>
+<template id="cocinar">
+	<div class="text-center col-lg-4">
+		<p style="font-size: 40px;">
+			{{ votos }}
+		</p>
+		<button class="btn btn-info" @click="votar">{{ name }}</button>
+	</div>
+	
+</template>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+
+	var bus = new Vue()
+
+  	Vue.component('cocina', {
+		template: '#cocinar',
+		props: ['name'],
+		data: function() {
+			return {
+				votos: 0
+			}
+		},
+		methods: {
+			votar: function (event) {
+				console.log(event)
+				this.votos++
+				this.$emit('votar', event.srcElement.textContent)
+			}
+		},
+	});
+	new Vue({
+		el: '#app',
+		data: {
+		 	votos: 0,
+		 	log: []
+		},
+		methods: {
+			contarVoto:function(cocinar){
+				this.votos++
+				this.log.push(cocinar + 'recibió un voto.')
+			}
+		}
+	})
+</script>
+</html> 	

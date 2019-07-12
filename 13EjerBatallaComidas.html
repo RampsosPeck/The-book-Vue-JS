@@ -1,0 +1,93 @@
+<html>
+<head>
+	<title>Batalla de comida</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container text-center">
+			<h1> Batalla de comida</h1>
+			<p style="font-size: 140px;">
+				{{ votos.count }}
+			</p>
+			<button class="btn btn-danger" @click="reset"> Resetear Votos</button>
+			<div class="row">
+				<cocina @votar="contarVoto" name="Hamburguesa con queso"></cocina> 
+				<cocina @votar="contarVoto" name="Rodeo Burguer"></cocina>
+				<cocina @votar="contarVoto" name="Super Burguer"></cocina>
+				<cocina @votar="contarVoto" name="Burguer pepa"></cocina>
+			</div>
+			<h1>Registro:</h1>
+			<ul class="list-group">
+				<li class="list-group-item" v-for="votar in votos.log"> {{ votar }} </li>
+			</ul>
+		</div>
+	</div> 
+</body>
+<template id="cocinar">
+	<div class="text-center col-lg-4">
+		<p style="font-size: 40px;">
+			{{ votos }}
+		</p>
+		<button class="btn btn-info" @click="votar">{{ name }}</button>
+	</div>
+	
+</template>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+
+	var bus = new Vue()
+
+  	Vue.component('cocina', {
+		template: '#cocinar',
+		props: ['name'],
+		data: function() {
+			return {
+				votos: 0
+			}
+		},
+		methods: {
+			votar: function (event) {
+				//console.log(event)
+				// En lugar de usar this.name
+				// podemos acceder al texto del elemento
+				var food = event.srcElement.textContent;
+				this.votos++
+				this.$emit('votar',food)
+			},
+			reset: function () {
+				this.votes = 0
+			}
+		},
+		created(){
+			bus.$on('reset', this.reset)
+		}
+	});
+	new Vue({
+		el: '#app',
+		data: {
+		 	votos: {
+		 		count: 0,
+		 		log: []
+		 	}
+		},
+		methods: {
+			contarVoto:function(food){
+				this.votos.count++
+				this.votos.log.push(food + 'recibió un voto.')
+			},
+			reset: function(){
+				this.votos = {
+					count: 0,
+					log: []
+				}
+				bus.$emit('reset')
+			}
+		},
+		created(){
+			bus.$on('votar',this.contarVoto)
+		}
+	})
+</script>
+</html> 	
