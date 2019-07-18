@@ -1,0 +1,198 @@
+
+<html>
+<head>
+	<title>Eliminando Listener de Eventos</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<div class="container">
+			<h1>Escuchar algunas historias!</h1>
+			<ul class="list-group-item-success">
+				<story v-for="(historia, index) in historias"
+					:key="index" :historia="historia" :favorito="favorito"
+					@update="updateFavorito">
+				</story>
+
+			</ul> 
+			<pre>
+				{{ $data }}
+			</pre>
+		</div>
+	</div> 
+<template id="template-historia">
+	<li class="list-group-item-primary">
+		{{ historia.letra }} dijo "{{ historia.detalle }}".
+		Historia actualizado {{ historia.acvotos }}
+	
+		<button v-show="!historia.votado" @click="acvotos" class="btn btn-danger" >
+			Actualizar votos
+		</button>
+		<button v-show="!esFavorito" @click="marcarFavorito" class="btn btn-primary" >
+			Favorito
+		</button>
+		<span v-show="!esFavorito" class="glyphicon glyphicon-bell pull-right" aria-hidden="true"></span>
+	</li>
+</template>
+</body> 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
+<script type="text/javascript">
+ 	Vue.component('story',{
+ 		template: "#template-historia",
+ 		props: ['historia', 'favorito'],
+ 		methods:{
+ 			acvotos: function (){
+ 				this.historia.acvotos += 1;
+ 				this.historia.votado = true;
+ 			},
+ 			marcarFavorito: function(){
+ 				this.$emit('update', this.historia)
+ 			},
+ 		},
+ 		computed:{
+ 			esFavorito: function(){
+ 				return this.historia === this.favorito;
+ 			},
+ 		}
+ 	});
+	new Vue({
+		el: '#app',
+		data: {
+		 	 historias: [
+			      {
+			        letra: 'My horse is amazing.',
+			        detalle: 'Mr. Weebl',
+			        acvotos: 28,
+			        votado: false,
+			      },
+			      {
+			        letra: 'Narwhals invented Shish Kebab.',
+			        detalle: 'Mr. Weebl',
+			        acvotos: 8,
+			        votado: false,
+			      },
+			      {
+			        letra: 'The dark side of the Force is stronger.',
+			        detalle: 'Darth Vader',
+			        acvotos: 49,
+			        votado: false,
+			      },
+			      {
+			        letra: 'One does not simply walk into Mordor',
+			        detalle: 'Boromir',
+			        acvotos: 74,
+			        votado: false,
+			      },
+			],
+			favorito: {}
+		},
+		methods: {
+			updateFavorito: function(historia){
+				this.favorito = historia;
+			} 
+		}
+	})
+</script>
+</html> 	 
+
+<!--
+<html>
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <title>Hello Vue</title>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>Let's hear some stories!</h1>
+      <ul class="list-group">
+        <story v-for="(story, index) in stories"
+          :key="index"
+          :story="story"
+          :favorite="favorite"
+          @update="updateFavorite">
+        </story>
+    </ul>
+    <pre>
+      {{ $data }}
+    </pre>
+  </div>
+</div>
+<template id="story-template">
+  <li class="list-group-item">
+    {{ story.writer }} said "{{ story.plot }}".
+    Story upvotes {{ story.upvotes }}.
+    <button v-show="!story.voted" @click="upvote" class="btn btn-default">
+      Upvote
+    </button>
+    <button v-show="!isFavorite" @click="markAsFavorite" class="btn btn-primary">
+      Favorite
+  </button>
+  <span v-show="isFavorite" class="glyphicon glyphicon-star pull-right" aria-hidden="true"></span>
+  </li>
+</template>
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.0-rc.8/vue.js"></script>
+<script type="text/javascript">
+Vue.component('story', {
+  template: "#story-template",
+  props: ['story', 'favorite'],
+  methods:{
+    upvote: function () {
+      this.story.upvotes += 1;
+      this.story.voted = true;
+    },
+    markAsFavorite: function () {
+      // 'update' is just the name of the custom event
+      // it could be anything. ex: fav-update
+      this.$emit('update', this.story)
+    },
+  },
+  computed:{
+    isFavorite: function () {
+      return this.story === this.favorite;
+    },
+  }
+});
+new Vue({
+  el: '#app',
+  data: {
+    stories: [
+      {
+        plot: 'My horse is amazing.',
+        writer: 'Mr. Weebl',
+        upvotes: 28,
+        voted: false,
+      },
+      {
+        plot: 'Narwhals invented Shish Kebab.',
+        writer: 'Mr. Weebl',
+        upvotes: 8,
+        voted: false,
+      },
+      {
+        plot: 'The dark side of the Force is stronger.',
+        writer: 'Darth Vader',
+        upvotes: 49,
+        voted: false,
+      },
+      {
+        plot: 'One does not simply walk into Mordor',
+        writer: 'Boromir',
+        upvotes: 74,
+        voted: false,
+      },
+    ],
+    favorite: {}
+  },
+  methods:{
+      updateFavorite: function (story) {
+        this.favorite = story;
+      },
+    },
+})
+</script>
+</html> -->
+
+

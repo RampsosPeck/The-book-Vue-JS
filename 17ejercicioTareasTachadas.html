@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>Enlaces de estilos Pag. 118</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		 <ul>
+		 	<li :class="{'completado': tarea.hecho}"
+		 		:estilo="estiloObjeto"
+		 		v-for="tarea in tareas">
+		 		{{ tarea.cuerpo }}
+		 		<button @click="completarTarea(tarea)" class="btn btn-success">
+		 			¡Solo  hazlo!
+		 		</button>
+		 	</li>
+		 </ul>
+	</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.1/vue.js"></script>
+<script type="text/javascript">
+	new Vue({
+		el: '.container',
+		data: {
+			tareas: [
+				{ cuerpo: "Alimentar a los caballos", hecho:true},
+				{ cuerpo: "Lavar la armadura", hecho:false},
+				{ cuerpo: "Ronronear al golfo", hecho:true},
+				{ cuerpo: "Afilar la espada", hecho:false},
+			],
+			estiloObjeto: {
+				fontSize: '25px'
+			}
+		}, 
+		methods: {
+			completarTarea: function(tarea)
+			{
+				tarea.hecho = !tarea.hecho;
+			}
+		}
+	})
+</script>
+<style type="text/css">
+	.completado{
+		text-decoration: line-through;
+	}
+</style>
+</html>
