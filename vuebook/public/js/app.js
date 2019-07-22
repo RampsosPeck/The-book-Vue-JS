@@ -1753,6 +1753,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1760,16 +1787,39 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    upvoteStore: function upvoteStore(story) {
+    createStory: function createStory() {
+      var newStory = {
+        "plot": "",
+        "upvotes": 0,
+        "editing": true
+      };
+      this.stories.push(newStory);
+    },
+    upvoteStory: function upvoteStory(story) {
       story.upvotes++;
       axios.put("/api/stories/" + story.id).then(function (res) {
         return console.log(res.data);
       });
     },
-    deleteStore: function deleteStore(story) {
+    deleteStory: function deleteStory(story) {
       axios["delete"]("/api/stories/" + story.id).then(function (res) {
         return console.log(res.data);
       });
+    },
+    editStory: function editStory(story) {
+      story.editing = true;
+    },
+    updateStory: function updateStory(story) {
+      axios.put("/api/stories/" + story.id, story).then(function (res) {
+        return story.editing = false;
+      });
+    },
+    storeStory: function storeStory(story) {
+      axios.post('/api/stories/', story).then(function (res) {
+        return (//Yo uso Vue.set(story, 'id', response.data.id) en lugar de story.id = response.data.id * porque dentro de nuestra tabla mostramos el id de cada historia.
+          Vue.set(story, 'id', res.data.id)
+        );
+      }, story.editing = false);
     }
   },
   created: function created() {
@@ -1777,7 +1827,10 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get("/api/stories").then(function (_ref) {
       var data = _ref.data;
-      return _this.stories = data;
+      return _this.stories = data.map(function (story) {
+        story.editing = false;
+        return story;
+      });
     });
   }
 });
@@ -37080,7 +37133,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-10" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v("¡Escuchemos algunas historias!")
@@ -37104,6 +37157,29 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
+                        story.editing
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: story.plot,
+                                  expression: "story.plot"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              domProps: { value: story.plot },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(story, "plot", $event.target.value)
+                                }
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
                         _c("span", [
                           _vm._v(
                             "\n                                        " +
@@ -37114,6 +37190,29 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
+                        story.editing
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: story.writer,
+                                  expression: "story.writer"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              domProps: { value: story.writer },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(story, "writer", $event.target.value)
+                                }
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
                         _c("span", [
                           _vm._v(
                             "\n                                        " +
@@ -37132,39 +37231,111 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-info btn-block",
-                            on: {
-                              click: function($event) {
-                                return _vm.upvoteStore(story)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        Votar!\n                                    "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger btn-block",
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteStore(story)
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        Eliminar\n                                    "
-                            )
-                          ]
-                        )
+                        !story.editing
+                          ? _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary btn-block",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.upvoteStory(story)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Votar!\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-info btn-block",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editStory(story)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Editar\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger btn-block",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteStory(story)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Eliminar\n                                    "
+                                  )
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              story.id
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-success btn-block",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.updateStory(story)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Actualizar Historia\n                                        "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-info btn-block",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.storeStory(story)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        Guardar nueva Historia\n                                        "
+                                      )
+                                    ]
+                                  ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-warning btn-block",
+                                  on: {
+                                    click: function($event) {
+                                      story.editing = false
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Cancelar\n                                        "
+                                  )
+                                ]
+                              )
+                            ])
                       ])
                     ])
                   })
@@ -37175,7 +37346,23 @@ var render = function() {
             _vm._v(" "),
             _c("p", { staticClass: "lead" }, [
               _vm._v(
-                "Aquí está una lista de todas sus historias.\n                    "
+                "Aquí está una lista de todas sus historias.\n                        "
+              ),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.createStory()
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                            ¿Añadir una nueva?\n                        "
+                  )
+                ]
               )
             ]),
             _vm._v(" "),
@@ -49446,15 +49633,14 @@ if (token) {
 /*!********************************************************!*\
   !*** ./resources/js/components/EjercicioHistorias.vue ***!
   \********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EjercicioHistorias_vue_vue_type_template_id_a69a3fe0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EjercicioHistorias.vue?vue&type=template&id=a69a3fe0& */ "./resources/js/components/EjercicioHistorias.vue?vue&type=template&id=a69a3fe0&");
 /* harmony import */ var _EjercicioHistorias_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EjercicioHistorias.vue?vue&type=script&lang=js& */ "./resources/js/components/EjercicioHistorias.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _EjercicioHistorias_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _EjercicioHistorias_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -49484,7 +49670,7 @@ component.options.__file = "resources/js/components/EjercicioHistorias.vue"
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/EjercicioHistorias.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
