@@ -1775,11 +1775,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1832,6 +1827,116 @@ __webpack_require__.r(__webpack_exports__);
         return story;
       });
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      peliculas: {}
+    };
+  },
+  mounted: function mounted() {
+    this.fetchDatas();
+  },
+  methods: {
+    crearPelicula: function crearPelicula() {
+      var nuevaPelicula = {
+        titulo: '',
+        director: '',
+        editando: true
+      };
+      this.peliculas.push(nuevaPelicula);
+    },
+    editarPelicula: function editarPelicula(pelicula) {
+      pelicula.editando = true;
+    },
+    actualizarPelicula: function actualizarPelicula(pelicula) {
+      axios.put("/api/peliculas/" + pelicula.id, pelicula).then(function (res) {
+        return pelicula.editando = false;
+      });
+    },
+    eliminarPelicula: function eliminarPelicula(pelicula) {
+      var _this = this;
+
+      axios["delete"]("/api/peliculas/" + pelicula.id).then(function (res) {
+        return _this.fetchDatas();
+      });
+    },
+    guardarPelicula: function guardarPelicula(pelicula) {
+      axios.post("/api/peliculas/", pelicula).then(function (res) {
+        return Vue.set(pelicula, 'id', res.data.id);
+      }, pelicula.editando = false);
+    },
+    fetchDatas: function fetchDatas() {
+      var _this2 = this;
+
+      axios.get("/api/peliculas").then(function (_ref) {
+        var data = _ref.data;
+        return _this2.peliculas = data.map(function (pelicula) {
+          pelicula.editando = false;
+          return pelicula;
+        });
+      });
+    }
   }
 });
 
@@ -37133,243 +37238,227 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-10" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("¡Escuchemos algunas historias!")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table table-hover table-striped" }, [
-              _c(
-                "tbody",
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.stories, function(story) {
-                    return _c("tr", { attrs: { story: story } }, [
-                      _c("td", [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(story.id) +
-                            "\n                                "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        story.editing
-                          ? _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: story.plot,
-                                  expression: "story.plot"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: { value: story.plot },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(story, "plot", $event.target.value)
-                                }
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("span", [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(story.plot) +
-                              "\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        story.editing
-                          ? _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: story.writer,
-                                  expression: "story.writer"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              domProps: { value: story.writer },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(story, "writer", $event.target.value)
-                                }
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("span", [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(story.writer) +
-                              "\n                                    "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(story.upvotes) +
-                            "\n                                "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        !story.editing
-                          ? _c("div", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary btn-block",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.upvoteStory(story)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Votar!\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-info btn-block",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editStory(story)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Editar\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger btn-block",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteStory(story)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Eliminar\n                                    "
-                                  )
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              story.id
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-success btn-block",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateStory(story)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Actualizar Historia\n                                        "
-                                      )
-                                    ]
-                                  )
-                                : _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-info btn-block",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.storeStory(story)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                        Guardar nueva Historia\n                                        "
-                                      )
-                                    ]
-                                  ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-warning btn-block",
-                                  on: {
-                                    click: function($event) {
-                                      story.editing = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Cancelar\n                                        "
-                                  )
-                                ]
-                              )
-                            ])
-                      ])
-                    ])
-                  })
-                ],
-                2
-              )
-            ]),
+      _c("table", { staticClass: "table table-hover table-striped" }, [
+        _c(
+          "tbody",
+          [
+            _vm._m(0),
             _vm._v(" "),
-            _c("p", { staticClass: "lead" }, [
-              _vm._v(
-                "Aquí está una lista de todas sus historias.\n                        "
-              ),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  on: {
-                    click: function($event) {
-                      return _vm.createStory()
-                    }
-                  }
-                },
-                [
+            _vm._l(_vm.stories, function(story) {
+              return _c("tr", { attrs: { story: story } }, [
+                _c("td", [
                   _vm._v(
-                    "\n                            ¿Añadir una nueva?\n                        "
+                    "\n                            " +
+                      _vm._s(story.id) +
+                      "\n                        "
                   )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("pre", [_vm._v(_vm._s(_vm.$data))])
-          ])
-        ])
-      ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  story.editing
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: story.plot,
+                            expression: "story.plot"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        domProps: { value: story.plot },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(story, "plot", $event.target.value)
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(story.plot) +
+                        "\n                            "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  story.editing
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: story.writer,
+                            expression: "story.writer"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        domProps: { value: story.writer },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(story, "writer", $event.target.value)
+                          }
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(story.writer) +
+                        "\n                            "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(
+                    "\n                            " +
+                      _vm._s(story.upvotes) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  !story.editing
+                    ? _c("div", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.upvoteStory(story)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Votar!\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.editStory(story)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Editar\n                            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteStory(story)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Eliminar\n                            "
+                            )
+                          ]
+                        )
+                      ])
+                    : _c("div", [
+                        story.id
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-success btn-block",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateStory(story)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Actualizar Historia\n                                "
+                                )
+                              ]
+                            )
+                          : _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info btn-block",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.storeStory(story)
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                Guardar nueva Historia\n                                "
+                                )
+                              ]
+                            ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-block",
+                            on: {
+                              click: function($event) {
+                                story.editing = false
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Cancelar\n                                "
+                            )
+                          ]
+                        )
+                      ])
+                ])
+              ])
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v("Aquí está una lista de todas sus historias.\n                "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success",
+            on: {
+              click: function($event) {
+                return _vm.createStory()
+              }
+            }
+          },
+          [_vm._v("\n                    ¿Añadir una nueva?\n                ")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("pre", [_vm._v(_vm._s(_vm.$data))])
     ])
   ])
 }
@@ -37388,6 +37477,219 @@ var staticRenderFns = [
       _c("th", [_vm._v("Votos a favor")]),
       _vm._v(" "),
       _c("th", [_vm._v("Acciones")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354& ***!
+  \*********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "table",
+        { staticClass: "table table-hover table-striped" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.peliculas, function(pelicula) {
+            return _c("tr", { key: pelicula.id }, [
+              _c("td", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(pelicula.id) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "col-md-5" }, [
+                pelicula.editando
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: pelicula.titulo,
+                          expression: "pelicula.titulo"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      domProps: { value: pelicula.titulo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(pelicula, "titulo", $event.target.value)
+                        }
+                      }
+                    })
+                  : _c("span", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(pelicula.titulo) +
+                          "\n                    "
+                      )
+                    ])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "col-md-4" }, [
+                pelicula.editando
+                  ? _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: pelicula.director,
+                          expression: "pelicula.director"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      domProps: { value: pelicula.director },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(pelicula, "director", $event.target.value)
+                        }
+                      }
+                    })
+                  : _c("span", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(pelicula.director) +
+                          "\n                    "
+                      )
+                    ])
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "col-md-2" }, [
+                !pelicula.editando
+                  ? _c("div", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-block",
+                          on: {
+                            click: function($event) {
+                              return _vm.editarPelicula(pelicula)
+                            }
+                          }
+                        },
+                        [_vm._v("Editar")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-block",
+                          on: {
+                            click: function($event) {
+                              return _vm.eliminarPelicula(pelicula)
+                            }
+                          }
+                        },
+                        [_vm._v("Eliminar")]
+                      )
+                    ])
+                  : _c("div", [
+                      pelicula.id
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary btn-block",
+                              on: {
+                                click: function($event) {
+                                  return _vm.actualizarPelicula(pelicula)
+                                }
+                              }
+                            },
+                            [_vm._v("Actualizar Pelicula")]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-block",
+                              on: {
+                                click: function($event) {
+                                  return _vm.guardarPelicula(pelicula)
+                                }
+                              }
+                            },
+                            [_vm._v("Guardar nueva pelicula")]
+                          ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-warning",
+                          on: {
+                            click: function($event) {
+                              pelicula.editando = false
+                            }
+                          }
+                        },
+                        [_vm._v("Cancelar")]
+                      )
+                    ])
+              ])
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v(
+          "\n            Aquí hay una ista de todas tus películas\n            "
+        ),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info",
+            on: {
+              click: function($event) {
+                return _vm.crearPelicula()
+              }
+            }
+          },
+          [_vm._v("¿Añadir una nueva?")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("#")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("TITULO")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("DIRECTOR")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("ACCIONES")])
     ])
   }
 ]
@@ -49559,6 +49861,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('historia', __webpack_require__(/*! ./components/EjercicioHistorias.vue */ "./resources/js/components/EjercicioHistorias.vue")["default"]);
+Vue.component('pelicula', __webpack_require__(/*! ./components/EjercicioPeliculas.vue */ "./resources/js/components/EjercicioPeliculas.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49693,6 +49996,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioHistorias_vue_vue_type_template_id_a69a3fe0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioHistorias_vue_vue_type_template_id_a69a3fe0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/EjercicioPeliculas.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/EjercicioPeliculas.vue ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EjercicioPeliculas.vue?vue&type=template&id=53bcc354& */ "./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354&");
+/* harmony import */ var _EjercicioPeliculas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EjercicioPeliculas.vue?vue&type=script&lang=js& */ "./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EjercicioPeliculas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/EjercicioPeliculas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioPeliculas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./EjercicioPeliculas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EjercicioPeliculas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioPeliculas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./EjercicioPeliculas.vue?vue&type=template&id=53bcc354& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EjercicioPeliculas.vue?vue&type=template&id=53bcc354&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EjercicioPeliculas_vue_vue_type_template_id_53bcc354___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

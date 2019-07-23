@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Vuebook\User;
 use Vuebook\Story;
+use Vuebook\Pelicula;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -19,8 +20,8 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name' => 'Ing. Jorge Peralta',
+        'email' => 'jope@gmail.com',
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
@@ -236,6 +237,68 @@ $factory->define(Story::class, function (Faker $faker) use ($starwars){
         'plot' => $swStory['plot'],
         'writer' => $swStory['writer'],
         'upvotes' => $faker->numberBetween(0, 900)
+    ];
+});
+
+
+$greatPeliculas = [
+    ["director" => "Christopher Nolan", "titulo" => "The Dark Knight"],
+    ["director" => "Sergio Leone", "titulo" => "The Good, the Bad and the Ugly"],
+    ["director" => "Steven Spielberg", "titulo" => "Saving Private Ryan"],
+    ["director" => "Quentin Tarantino", "titulo" => "Pulp Fiction"],
+    ["director" => "Alfred Hitchcock", "titulo" => "Psycho"],
+    ["director" => "Hayao Miyazaki", "titulo" => "Spirited Away"],
+    ["director" => "Peter Jackson", "titulo" => "The Lord of the Rings: The Fellowship of the Ring"],
+    ["director" => "James Cameron", "titulo" => "Aliens"],
+    ["director" => "Alfonso Cuarón", "titulo" => "Gravity"],
+    ["director" => "Frank Darabont", "titulo" => "The Shawshank Redemption"],
+    ["director" => "William Wyler", "titulo" => "Ben-Hur"],
+    ["director" => "Howard Hawks", "titulo" => "The Big Sleep"],
+    ["director" => "Martin Scorsese", "titulo" => "The Wolf of Wall Street"],
+    ["director" => "Richard Linklater", "titulo" => "Before Sunset"],
+    ["director" => "Ang Lee", "titulo" => "Life of Pi"],
+    ["director" => "Sidney Lumet", "titulo" => "12 Angry Men"],
+    ["director" => "George Lucas", "titulo" => "Star Wars: Episode VI - Return of the Jedi"],
+    ["director" => "Paul Greengrass", "titulo" => "The Bourne Ultimatum"],
+    ["director" => "Mel Gibson", "titulo" => "Braveheart"],
+    ["director" => "Clint Eastwood", "titulo" => "Million Dollar Baby"],
+    ["director" => "Robert Zemeckis", "titulo" => "Back to the Future Part II"],
+    ["director" => "Brian De Palma", "titulo" => "Scarface"],
+    ["director" => "Lasse Hallström", "titulo" => "What's Eating Gilbert Grape"],
+    ["director" => "William Friedkin", "titulo" => "The Exorcist"],
+    ["director" => "David Yates", "titulo" => "Harry Potter and the Deathly Hallows: Part 2"],
+    ["director" => "Billy Wilder", "titulo" => "Some Like It Hot"],
+    ["director" => "Stanley Kubrick", "titulo" => "A Clockwork Orange"],
+    ["director" => "Guy Ritchie", "titulo" => "Snatch."],
+    ["director" => "Milos Forman", "titulo" => "One Flew Over the Cuckoo's Nest"],
+    ["director" => "Gore Verbinski", "titulo" => "Pirates of the Caribbean: The Curse of the Black Pearl"],
+    ["director" => "Frank Capra", "titulo" => "It's a Wonderful Life"],
+    ["director" => "Edgar Wright", "titulo" => "Shaun of the Dead"],
+    ["director" => "David Fincher", "titulo" => "Fight Club"],
+    ["director" => "Francis Lawrence", "titulo" => "The Hunger Games: Catching Fire"],
+    ["director" => "Ron Howard", "titulo" => "American Graffiti"],
+    ["director" => "Ron Clements", "titulo" => "Aladdin"],
+    ["director" => "John Musker", "titulo" => "Aladdin"],
+    ["director" => "Danny Boyle", "titulo" => "Slumdog Millionaire"],
+    ["director" => "James Wan", "titulo" => "Saw"],
+    ["director" => "Brad Bird", "titulo" => "Ratatouille"],
+    ["director" => "Denis Villeneuve", "titulo" => "Incendies"],
+    ["director" => "Alejandro Amenábar", "titulo" => "The Others"],
+    ["director" => "Andrew Stanton", "titulo" => "Finding Nemo"],
+    ["director" => "David Lean", "titulo" => "Lawrence of Arabia"],
+    ["director" => "Wes Anderson", "titulo" => "The Grand Budapest Hotel"],
+    ["director" => "Akira Kurosawa", "titulo" => "Yojimbo"],
+    ["director" => "George Roy Hill", "titulo" => "Butch Cassidy and the Sundance Kid"],
+    ["director" => "Woody Allen", "titulo" => "Annie Hall"],
+    ["director" => "Joseph L. Mankiewicz", "titulo" => "All About Eve"],
+    ["director" => "Roman Polanski", "titulo" => "The Pianist"]
+];
+
+$factory->define(Pelicula::class, function (Faker $faker) use ($greatPeliculas){
+    $swPelicula = $faker->randomElement($greatPeliculas);
+    return [
+        'director' => $swPelicula['director'],
+        'titulo' => $swPelicula['titulo'] 
     ];
 });
 

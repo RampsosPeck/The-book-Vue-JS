@@ -30,7 +30,9 @@ Route::group(['prefix' => 'api'], function () {
     Route::resource('stories', 'Api\StoriesController');
 });
 
-
+Route::group(['prefix' => 'api'], function () {
+    Route::resource('peliculas', 'Api\PeliculasController');
+});
 
 Auth::routes();
 
